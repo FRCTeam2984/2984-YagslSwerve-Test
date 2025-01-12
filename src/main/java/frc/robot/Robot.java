@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Filesystem;
 import swervelib.parser.SwerveParser;
+import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.SwerveDrive;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -19,6 +20,7 @@ public class Robot extends TimedRobot {
 
   public Robot() {
     double maxSpeed = Units.feetToMeters(4);
+    SwerveDriveTelemetry.verbosity = SwerveDriveTelemetry.TelemetryVerbosity.HIGH;
     File directory = new File(Filesystem.getDeployDirectory(), "swerve");
     
     try {
@@ -39,6 +41,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    m_robotDrive.drive(new Translation2d(-m_leftStick.getX(), 0), m_rightStick.getY()/4, false, false);
+    m_robotDrive.drive(new Translation2d(-m_leftStick.getX(), m_leftStick.getY()), m_rightStick.getY()/4, false, false);
   }
 }
