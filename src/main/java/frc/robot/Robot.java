@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.SwerveDrive;
+import swervelib.math.SwerveMath;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -41,6 +42,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    m_robotDrive.drive(new Translation2d(-m_leftStick.getX(), m_leftStick.getY()), m_rightStick.getY()/4, false, false);
+    m_robotDrive.drive(SwerveMath.scaleTranslation(new Translation2d(-m_leftStick.getX() * m_robotDrive.getMaximumChassisVelocity(), -m_leftStick.getY() * m_robotDrive.getMaximumChassisVelocity()), 0.8), Math.pow(m_rightStick.getY(), 3) * m_robotDrive.getMaximumChassisAngularVelocity(), true, false);
   }
 }
